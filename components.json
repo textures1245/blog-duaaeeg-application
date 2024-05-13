@@ -3,8 +3,8 @@
 	"style": "new-york",
 	"tailwind": {
 		"config": "tailwind.config.js",
-		"css": "src/app.pcss",
-		"baseColor": "slate"
+		"css": "src/app.css",
+		"baseColor": "blue"
 	},
 	"aliases": {
 		"components": "$lib/components",

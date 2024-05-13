@@ -1,3 +1,4 @@
+import plugin from "@sveltejs/adapter-auto";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
@@ -57,7 +58,11 @@ const config = {
 			fontFamily: {
 				sans: [...fontFamily.sans]
 			}
-		}
+		},
+
+	plugin: [
+		require("daisyui")
+	]
 	},
 };
 
