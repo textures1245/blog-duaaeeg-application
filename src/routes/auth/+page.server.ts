@@ -1,6 +1,6 @@
 import { redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import { AuthCredentialSchema, type AuthCredential } from "$lib/internal/domains/auth";
+import { AuthCredentialSchema, type AuthCredential } from "$lib/internal/model/auth/domains/auth";
 import { zValidate } from "$lib/internal/utils/validation";
 
 
@@ -20,7 +20,7 @@ export const actions: Actions = {
 
         const dat = zValidate(AuthCredentialSchema, { email, password });
 
-        
+
 
     }
 }
