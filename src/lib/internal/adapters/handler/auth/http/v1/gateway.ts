@@ -1,7 +1,7 @@
-import type { AuthCredential } from "$lib/internal/domains/auth";
-import type { AxiosInstance, AxiosResponse } from 'axios';
-import axios, { AxiosError } from 'axios';
-import { APIGateway } from "$lib/internal/adapters/handler"
+import type { AuthCredential, TAuthHandlerGateway } from '$lib/internal/model/auth/domains/auth';
+import type { AxiosError, AxiosResponse } from 'axios';
+// import axios, { AxiosError } from 'axios';
+import { APIGateway } from '$lib/internal/adapters/handler';
 
 // export type FetchParams = {
 // 	/**
@@ -11,32 +11,26 @@ import { APIGateway } from "$lib/internal/adapters/handler"
 // 	_limit: number;
 // };
 
-export interface AuthHandlerGateway<T = AuthCredential> {
-    signUp(data: T):  Promise<AxiosResponse<any, any>>,
-    signIn(data: T):  Promise<AxiosResponse<any, any>>,
-}
+export default class APIAuthGateway extends APIGateway implements TAuthHandlerGateway {
+	constructor(baseURL?: string) {
+		super(baseURL);
+	}
 
-export class APIAuthGateway extends APIGateway implements AuthHandlerGateway {
+	public async signUp(data: AuthCredential): Promise<AxiosResponse> {
+		try {
+			return this.client.post('/auth/signup', data);
+		} catch (error: unknown) {
+			const axiosError = error as AxiosError;
+			throw new Error(`Failed to sign up: ${axiosError.message}`);
+		}
+	}
 
-    constructor(baseURL?: string) {
-        super(baseURL);
-    }
-
-    public async signUp(data: AuthCredential): Promise<AxiosResponse<any, any>> {
-        try {
-            return this.client.post('/auth/signup', data);
-        } catch (error: unknown) {
-            const axiosError = error as AxiosError;
-            throw new Error(`Failed to sign up: ${axiosError.message}`);
-        }
-    }
-
-    public async signIn(data: AuthCredential): Promise<AxiosResponse<any, any>> {
-        try {
-            return this.client.post('/auth/signin', data);
-        } catch (error: unknown) {
-            const axiosError = error as AxiosError;
-            throw new Error(`Failed to sign in: ${axiosError.message}`);
-        }
-    }
+	public async signIn(data: AuthCredential): Promise<AxiosResponse> {
+		try {
+			return this.client.post('/auth/signin', data);
+		} catch (error: unknown) {
+			const axiosError = error as AxiosError;
+			throw new Error(`Failed to sign in: ${axiosError.message}`);
+		}
+	}
 }
