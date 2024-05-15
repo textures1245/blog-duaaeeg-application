@@ -1,16 +1,27 @@
+<script context="module" lang="ts">
+</script>
+
 <script lang="ts">
+	import Toast from './../../components/Toast.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
+	import type { ActionData, PageData } from './$types';
 
 	let mode: 'SIGN_IN' | 'SIGN_UP' = 'SIGN_IN';
+	// export let data: PageData;
+	export let form: ActionData;
 </script>
+
+{#if form?.status_code === 500}
+	<Toast classList="bg-red-100" msg={form.message} status={form.status} />
+{/if}
 
 {#if mode === 'SIGN_IN'}
 	<Card.Root class="w-auto  bg-background text-foreground mx-auto grid  my-auto md:w-1/2">
-		<form method="POST" action="?/sign-in">
+		<form method="POST" action="?/signIn">
 			<Card.Header>
 				<Card.Title>Sign In</Card.Title>
 				<Card.Description>Enter your account below</Card.Description>
@@ -19,20 +30,21 @@
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
 						<Label for="name">Name</Label>
-						<Input id="email" placeholder="Email" />
+						<Input name="email" required type="email" id="email" placeholder="Email" />
 					</div>
 					<div class="flex flex-col space-y-1.5">
 						<Label for="id">Framework</Label>
-						<Input id="password" placeholder="Password" />
+						<Input name="password" required type="password" id="password" placeholder="Password" />
 					</div>
 				</div>
 				<div class="flex text-red items-center gap-2">
 					<Card.Description>Don't have an account</Card.Description>
 
-					<button
+					<Button
+						size="sm"
 						type="button"
 						class="btn btn-primary"
-						on:click={() => (mode = mode === 'SIGN_IN' ? 'SIGN_UP' : 'SIGN_IN')}>Sign Up</button
+						on:click={() => (mode = mode === 'SIGN_IN' ? 'SIGN_UP' : 'SIGN_IN')}>Sign Up</Button
 					>
 				</div>
 			</Card.Content>
@@ -44,7 +56,7 @@
 	</Card.Root>
 {:else}
 	<Card.Root class="w-auto  mx-auto grid  my-auto md:w-1/2">
-		<form>
+		<form method="POST" action="?/signUp">
 			<Card.Header>
 				<Card.Title>Sign Up</Card.Title>
 				<Card.Description>Enter your account below</Card.Description>
@@ -53,11 +65,11 @@
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
 						<Label for="name">Name</Label>
-						<Input id="email" placeholder="Email" />
+						<Input required type="email" name="email" id="email" placeholder="Email" />
 					</div>
 					<div class="flex flex-col space-y-1.5">
 						<Label for="id">Framework</Label>
-						<Input id="password" placeholder="Password" />
+						<Input required type="password" name="password" id="password" placeholder="Password" />
 					</div>
 				</div>
 				<div class="flex text-red items-center gap-2">
