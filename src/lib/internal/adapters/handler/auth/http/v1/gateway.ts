@@ -18,7 +18,11 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 
 	public async signUp(data: AuthCredential): Promise<AxiosResponse> {
 		try {
-			return this.client.post('/auth/signup', data);
+			return this.client.post('/register', data, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			});
 		} catch (error: unknown) {
 			const axiosError = error as AxiosError;
 			throw new Error(`Failed to sign up: ${axiosError.message}`);
@@ -27,7 +31,11 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 
 	public async signIn(data: AuthCredential): Promise<AxiosResponse> {
 		try {
-			return this.client.post('/auth/signin', data);
+			return this.client.post('/login', data, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			});
 		} catch (error: unknown) {
 			const axiosError = error as AxiosError;
 			throw new Error(`Failed to sign in: ${axiosError.message}`);
