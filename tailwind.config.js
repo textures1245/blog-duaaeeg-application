@@ -11,16 +11,12 @@ const config = {
 	safelist: ['dark'],
 	theme: {
 		container: {
-			center: true,
 			padding: {
-				DEFAULT: '1rem',
-				sm: '2rem',
-				lg: '10rem',
-				xl: '10rem',
-				'2xl': '10rem'
-			},
-			screens: {
-				'2xl': '1400px'
+				DEFAULT: '0.5rem',
+				sm: '1rem',
+				lg: '2rem',
+				xl: '3rem',
+				'2xl': '4rem'
 			}
 		},
 		extend: {
