@@ -22,4 +22,13 @@ export class Dto {
 			result: data.message
 		};
 	}
+
+	public static ReturnSuccess<T>(message: string, data?: Partial<T>): DtoResponded<T> {
+		return {
+			status: 'Success',
+			status_code: 200,
+			message: message,
+			result: data as T
+		};
+	}
 }
