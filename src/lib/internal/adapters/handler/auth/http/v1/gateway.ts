@@ -1,4 +1,8 @@
-import type { AuthCredential, TAuthHandlerGateway } from '$lib/internal/model/auth/domains/auth';
+import type {
+	AuthCredential,
+	TAuthHandlerGateway,
+	UserClaims
+} from '$lib/internal/model/auth/domains/auth';
 import type { AxiosError, AxiosResponse } from 'axios';
 // import axios, { AxiosError } from 'axios';
 import { APIGateway } from '$lib/internal/adapters/handler';
@@ -37,8 +41,21 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 				}
 			});
 		} catch (error: unknown) {
+			console.log(error);
 			const axiosError = error as AxiosError;
 			throw new Error(`Failed to sign in: ${axiosError.message}`);
+		}
+	}
+
+	public async getUserClaims(token: string): Promise<AxiosResponse<UserClaims>> {
+		try {
+			return this.client.get('/user-claim', {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+		} catch (error: unknown) {
+			throw new Error(`Failed to get user claims: ${(error as Error).message}`);
 		}
 	}
 }
