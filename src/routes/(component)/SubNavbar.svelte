@@ -18,14 +18,14 @@
 		<Breadcrumb.Root class="overflow-auto flex gap-16 items-center">
 			<Breadcrumb.List>
 				{#each menu as m}
-					<Breadcrumb.Item class="flex gap-3">
+					<Breadcrumb.Item class="flex gap-4">
 						<Breadcrumb.Link
 							style="	color: rgb(31 41 55);"
 							href={m}
 							class="text-base  text-slate-200">{m}</Breadcrumb.Link
 						>
 
-						<div class="font-lighter text-sm mr-3 text-slate-50">|</div>
+						<div class="font-lighter text-sm mr-4 text-slate-50">|</div>
 					</Breadcrumb.Item>
 				{/each}
 			</Breadcrumb.List>

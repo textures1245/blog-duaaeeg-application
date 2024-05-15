@@ -49,20 +49,21 @@
 	};
 </script>
 
-<Card.Root class="rounded-none shadow-none border-0">
+<Card.Root class="rounded-none  shadow-none border-0">
 	<Card.Header>
 		<Card.Title tag="h1">Engagement History</Card.Title>
 	</Card.Header>
 	<Card.Content class="flex flex-col gap-4">
 		<Card.Title class="font-normal" tag="h6">Subscribing</Card.Title>
-		<div class="flex -space-x-2 overflow-hidden">
+		<div class="flex p-2 -space-x-1 overflow-hidden">
 			{#each Array(7).fill(null) as item}
-				<Avatar.Root>
+				<Avatar.Root class="transition ease-in-out hover:scale-110 cursor-pointer">
 					<Avatar.Image src={prop.actor.avatarSrc} alt={prop.actor.alt ?? 'avatar-img'} />
 					<Avatar.Fallback>{prop.actor.name[0].toUpperCase()}</Avatar.Fallback>
 				</Avatar.Root>
 			{/each}
 		</div>
+        <Separator />
 	</Card.Content>
 	<Card.Content id="author-list-item-section" class="flex flex-col gap-4">
 		<Card.Title class="font-normal" tag="h6">Liked Contents</Card.Title>

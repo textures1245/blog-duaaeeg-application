@@ -12,10 +12,10 @@
 	</Card.Header>
 	<Card.Content class="flex gap-4 flex-wrap">
 		{#each Array(10).fill(null) as item, i}
-			<Badge class="!bg-slate-500 rounded-full p-3 px-5">Hiking</Badge>
+			<Button class="rounded-full" variant="secondary">Hiking</Button>
 		{/each}
 	</Card.Content>
-	<Card.Footer class="-mt-2">
+	<Card.Footer>
 		<Button size="sm" variant="link" class="bg-blue-100 text-blue-600">See more</Button>
 	</Card.Footer>
 </Card.Root>

@@ -3,7 +3,6 @@
 	import SubNavbar from './(component)/SubNavbar.svelte';
 	import AccordionItem from './../components/list-data/AccordionItem.svelte';
 	import * as Accordion from '$lib/components/ui/accordion';
-	import Navbar from './../components/Navbar.svelte';
 	import './../app.css';
 
 	import type { PageData } from './$types';
@@ -17,10 +16,7 @@
 </script>
 
 <Layout>
-	<div slot="navbar">
-		<Navbar />
-	</div>
-	<main class="c xl:container px-0 xl:px-20 mx-auto">
+	<main class="lg:container mx-auto">
 		<div class="grid container lg:max-w-none lg:grid-cols-3 gap-0 xl:gap-12">
 			<div id="list-content" class="col-span-2 space-y-4">
 				<SubNavbar />
