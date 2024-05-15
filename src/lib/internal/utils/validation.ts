@@ -1,11 +1,14 @@
-import type { z } from "zod";
+import type { z } from 'zod';
 
-export function zValidate<Z extends z.AnyZodObject>(zSchema: Z, data: any): ReturnType<Z["parse"]> {
-    const result = zSchema.safeParse(data);
+export function zValidate<Z extends z.AnyZodObject>(
+	zSchema: Z,
+	data: unknown
+): ReturnType<Z['parse']> | Error {
+	const result = zSchema.safeParse(data);
 
 	if (!result.success) {
-		throw new Error(`Error while parsing data schema: ${result.error.message}`);
+		return new Error(`Error while parsing data schema: ${result.error.message}`);
 	}
 
-	return result.data as ReturnType<Z["parse"]>;
+	return result.data as ReturnType<Z['parse']>;
 }
