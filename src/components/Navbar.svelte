@@ -11,6 +11,10 @@
 	export let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
 	export let avatarSrc =
 		'https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg';
+
+	let showStatusBar = true;
+	let showActivityBar = false;
+	let showPanel = false;
 </script>
 
 <div class="grid bg h-20 items-center">
@@ -77,12 +81,10 @@
 				</Button>
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content align="end">
-				<DropdownMenu.Label>My Account</DropdownMenu.Label>
+				<DropdownMenu.Label>Account</DropdownMenu.Label>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item>Settings</DropdownMenu.Item>
-				<DropdownMenu.Item>Support</DropdownMenu.Item>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item>Logout</DropdownMenu.Item>
+				<DropdownMenu.Item href="/auth">Sign In</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	</header>

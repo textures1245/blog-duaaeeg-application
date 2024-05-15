@@ -23,17 +23,16 @@
 	};
 </script>
 
-<Card.Content class="space-y-2">
+<Card.Content class="hover:bg-secondary cursor-pointer rounded-sm pt-2 space-y-2">
 	<div class="flex items-center gap-2">
-		<Avatar.Root>
+		<Avatar.Root class="w-8 h-8">
 			<Avatar.Image
-				class="w-8 h-8"
 				src={prop.actor.avatarSrc}
 				alt={prop.actor.alt ?? 'avatar-img'}
 			/>
 			<Avatar.Fallback>{prop.actor.name[0].toUpperCase()}</Avatar.Fallback>
 		</Avatar.Root>
-		<Card.Title class="font-normal" tag="h6">{prop.actor.name}</Card.Title>
+		<Card.Title class="font-normal text-sm" tag="h6">{prop.actor.name}</Card.Title>
 	</div>
 	<Card.Title tag="h1">{prop.content.title}</Card.Title>
 	<Card.Description class="font-normal"

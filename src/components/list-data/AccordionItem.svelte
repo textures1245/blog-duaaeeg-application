@@ -49,7 +49,7 @@
 </script>
 
 <Accordion.Item value="item-1">
-	<Card.Root class="rounded-none shadow-none border-0">
+	<Card.Root class="rounded-sm hover:bg-secondary cursor-pointer  shadow-none border-0">
 		<Card.Header id="author-section">
 			<div class="flex items-center gap-4">
 				<Avatar.Root>
@@ -87,11 +87,11 @@
 		</Card.Content>
 		<Card.Footer id="footer-section" class="flex text-lg  justify-between">
 			<div id="tag-n-category" class="flex gap-4">
-				<Badge class="bg-gray-200">{capitalize(prop.content.category)}</Badge>
+				<Badge variant="secondary">{capitalize(prop.content.category)}</Badge>
 				<div class="flex items-center gap-2">
 					{#each prop.content.tags as tag}
-						<div class="font-light underline underline-offset-6">{tag}</div>
-						<div class="font-lighter text-sm text-slate-50">|</div>
+						<div class="font-light ">{tag}</div>
+						<Separator orientation="vertical" />
 					{/each}
 				</div>
 			</div>
