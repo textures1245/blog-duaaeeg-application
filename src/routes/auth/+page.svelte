@@ -16,11 +16,11 @@
 </script>
 
 {#if form?.status_code === 500}
-	<Toast classList="bg-red-100" msg={form.message} status={form.status} />
+	<Toast classList="bg-primary text-white" msg={form.message} status={form.status} />
 {/if}
 
 {#if mode === 'SIGN_IN'}
-	<Card.Root class="w-auto  bg-background text-foreground mx-auto grid  my-auto md:w-1/2">
+	<Card.Root class="w-full lg:w-[40rem]  bg-background text-foreground mx-auto grid  my-auto">
 		<form method="POST" action="?/signIn">
 			<Card.Header>
 				<Card.Title>Sign In</Card.Title>
