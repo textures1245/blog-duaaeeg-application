@@ -1,10 +1,23 @@
 import type { Actions, PageServerLoad } from './$types';
-import { AuthCredentialSchema, type AuthCredential } from '$lib/internal/model/auth/domains/auth';
+import {
+	AuthCredentialSchema,
+	type AuthCredential,
+	type AuthOption
+} from '$lib/internal/model/auth/domains/auth';
 import { zValidate } from '$lib/internal/utils/validation';
 import { NewAuthUsecase } from '$lib/internal/usecases';
 import { Dto } from '$lib/internal/model';
-import { fail } from '@sveltejs/kit';
-import { cookiesConfig } from '$lib/internal/utils/cookies';
+import { fail, redirect, type Cookies } from '@sveltejs/kit';
+import { cookiesConfig, CookiesJsonParser } from '$lib/internal/utils/cookies';
+
+function redirectToUserProfile(cookies: Cookies) {
+	if (cookies.get('token')) {
+		const { user } = CookiesJsonParser(cookies, 'user');
+		if (!user.user_profile.created_at) {
+			throw redirect(302, `/user-profile/${user.uuid}`);
+		}
+	}
+}
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
 	if (url.searchParams.get('action') === 'logout') {
@@ -17,6 +30,13 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 			}
 		};
 	}
+
+	redirectToUserProfile(cookies);
+
+
+	return {
+		status: 200
+	};
 };
 
 export const actions: Actions = {
@@ -31,7 +51,10 @@ export const actions: Actions = {
 		}
 
 		try {
-			const token = await NewAuthUsecase.onSignUp(dat);
+			const opt: AuthOption = {
+				'hash-method': 'AES'
+			};
+			const token = await NewAuthUsecase.onSignUp(dat, opt);
 			const user = await NewAuthUsecase.getUserData(token.result.access_token);
 			if (user.status_code !== 200) {
 				console.error(user);
@@ -41,9 +64,12 @@ export const actions: Actions = {
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
 
-			console.log(cookies.get('user'), cookies.get('token'));
-
-			return Dto.ReturnSuccess(`User has been registered`);
+			return {
+				headers: {
+					'set-cookie': `session=; Max-Age=0; Path=/; HttpOnly` // clear the session cookie
+				},
+				...Dto.ReturnSuccess(`User has been registered`)
+			};
 		} catch (error) {
 			console.error(error);
 			const res = Dto.ReturnError(`Failed to Authentication, please try again.`, error as Error);
@@ -61,7 +87,10 @@ export const actions: Actions = {
 		}
 
 		try {
-			const token = await NewAuthUsecase.onSignIn(dat);
+			const opt: AuthOption = {
+				'hash-method': 'AES'
+			};
+			const token = await NewAuthUsecase.onSignIn(dat, opt);
 			console.log(token.result.access_token);
 			const user = await NewAuthUsecase.getUserData(token.result.access_token);
 			if (user.status_code !== 200) {
@@ -72,7 +101,7 @@ export const actions: Actions = {
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
 
-			console.log(cookies.get('user'), cookies.get('token'));
+            redirectToUserProfile(cookies);
 
 			return Dto.ReturnSuccess(`User has been login`);
 		} catch (error) {

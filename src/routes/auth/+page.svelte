@@ -20,7 +20,7 @@
 {/if}
 
 {#if mode === 'SIGN_IN'}
-	<Card.Root class="w-full lg:w-[40rem]  bg-background text-foreground mx-auto grid  my-auto">
+	<Card.Root class="w-full sm:w-[40rem]  bg-background text-foreground mx-auto grid  ">
 		<form method="POST" action="?/signIn">
 			<Card.Header>
 				<Card.Title>Sign In</Card.Title>
