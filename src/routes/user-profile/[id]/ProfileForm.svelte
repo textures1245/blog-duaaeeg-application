@@ -16,6 +16,7 @@
 			.default('https://avatars.githubusercontent.com/u/83662667?v=4')
 	});
 	export type ProfileFormSchema = typeof profileFormSchema;
+	export type ProfileForm = z.infer<typeof profileFormSchema>;
 </script>
 
 <script lang="ts">
@@ -37,7 +38,7 @@
 		validators: zodClient(profileFormSchema)
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, errors } = form;
 
 	// function addUrl() {
 	// 	$formData.urls = [...$formData.urls, ''];
@@ -52,10 +53,10 @@
 	// }
 </script>
 
-<form method="POST" class="space-y-8" use:enhance id="profile-form">
+<form method="POST" class="space-y-8" use:enhance action="?/updateProfile" id="profile-form">
 	<Form.Field {form} name="first_name">
 		<Form.Control let:attrs>
-			<Form.Label>Username</Form.Label>
+			<Form.Label>First Name</Form.Label>
 			<Input placeholder="John" {...attrs} bind:value={$formData.first_name} />
 		</Form.Control>
 		<Form.Description>
@@ -67,9 +68,8 @@
 
 	<Form.Field {form} name="last_name">
 		<Form.Control let:attrs>
-			<Form.Label>Email</Form.Label>
+			<Form.Label>Last Name</Form.Label>
 			<Form.Control let:attrs>
-				<Form.Label>Username</Form.Label>
 				<Input placeholder="Doo" {...attrs} bind:value={$formData.last_name} />
 			</Form.Control>
 			<Form.Description>
@@ -102,9 +102,9 @@
 			<Form.Description>URL of your profile picture.</Form.Description>
 			<Form.FieldErrors />
 		</Form.Field>
-        <Avatar.Root>
-            <Avatar.Image src={$formData.profile_picture} alt="profile-picture-avatar" />
-        </Avatar.Root>
+		<Avatar.Root>
+			<Avatar.Image src={$formData.profile_picture} alt="profile-picture-avatar" />
+		</Avatar.Root>
 	</div>
 	<!-- <div>
 		<Form.Fieldset {form} name="urls">
@@ -127,6 +127,7 @@
 	</div> -->
 
 	<Form.Button>Update profile</Form.Button>
+	{#if $errors}<span class="invalid">{$errors._errors} {$errors.bio}</span>{/if}
 </form>
 
 {#if browser}
