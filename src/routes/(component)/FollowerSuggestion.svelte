@@ -70,6 +70,6 @@
 		</Card.Content>
 	{/each}
 	<Card.Footer class="-mt-2">
-		<Button size="sm" variant="link" class="bg-blue-100 text-blue-600">See more</Button>
+		<slot name="footer" />
 	</Card.Footer>
 </Card.Root>
