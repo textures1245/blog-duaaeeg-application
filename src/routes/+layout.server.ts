@@ -1,9 +1,9 @@
 import { Dto } from '$lib/internal/model';
 import { CookiesJsonParser } from '$lib/internal/utils/cookies';
 import { fail } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies }) => {
 	try {
 		const { user } = CookiesJsonParser(cookies, 'user');
 		return {
