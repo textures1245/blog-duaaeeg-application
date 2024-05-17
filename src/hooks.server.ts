@@ -1,16 +1,12 @@
-// // src/hooks.ts
-// import { redirect, type Handle } from '@sveltejs/kit';
+// src/hooks.ts
+import { redirect, type Handle } from '@sveltejs/kit';
 
-// export const handle: Handle = async ({ resolve, event }) => {
-// 	if (
-// 		!sessionStorage.getItem('token') &&
-// 		event.url.pathname !== '/auth' &&
-// 		event.url.pathname !== '/'
-// 	) {
-// 		throw redirect(300, '/auth');
-// 	}
+export const handle: Handle = async ({ resolve, event }) => {
+	if (!event.cookies.get('token') && event.url.pathname !== '/auth' && event.url.pathname !== '/') {
+		throw redirect(300, '/auth');
+	}
 
-// 	const response = await resolve(event);
+	const response = await resolve(event);
 
-// 	return response;
-// };
+	return response;
+};
