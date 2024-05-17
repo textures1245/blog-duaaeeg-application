@@ -21,14 +21,18 @@ export type UserToken = {
 	updated_at: string;
 };
 
+export type AuthOption = {
+	'hash-method': 'AES';
+};
+
 export interface TAuthHandlerGateway<T = AuthCredential> {
-	signUp(data: T): Promise<AxiosResponse<UserToken>>;
-	signIn(data: T): Promise<AxiosResponse<UserToken>>;
+	signUp(data: T, opt?: AuthOption): Promise<AxiosResponse<UserToken>>;
+	signIn(data: T, opt?: AuthOption): Promise<AxiosResponse<UserToken>>;
 	getUserClaims(token: string): Promise<AxiosResponse<UserClaims>>;
 }
 
 export interface TAuthUsecase<T = AuthCredential> {
-	onSignUp(data: T): Promise<DtoResponded<UserToken>>;
-	onSignIn(data: T): Promise<DtoResponded<UserToken>>;
+	onSignUp(data: T, opt?: AuthOption): Promise<DtoResponded<UserToken>>;
+	onSignIn(data: T, opt?: AuthOption): Promise<DtoResponded<UserToken>>;
 	getUserData(token: string): Promise<DtoResponded<User>>;
 }
