@@ -38,7 +38,7 @@
 		validators: zodClient(profileFormSchema)
 	});
 
-	const { form: formData, enhance, errors } = form;
+	const { form: formData, errors } = form;
 
 	// function addUrl() {
 	// 	$formData.urls = [...$formData.urls, ''];
@@ -53,7 +53,7 @@
 	// }
 </script>
 
-<form method="POST" class="space-y-8" use:enhance action="?/updateProfile" id="profile-form">
+<form method="POST" class="space-y-8"  action="?/updateProfile" id="profile-form">
 	<Form.Field {form} name="first_name">
 		<Form.Control let:attrs>
 			<Form.Label>First Name</Form.Label>
@@ -127,7 +127,6 @@
 	</div> -->
 
 	<Form.Button>Update profile</Form.Button>
-	{#if $errors}<span class="invalid">{$errors._errors} {$errors.bio}</span>{/if}
 </form>
 
 {#if browser}
