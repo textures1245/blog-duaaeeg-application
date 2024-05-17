@@ -4,26 +4,19 @@ import { zValidate } from '$lib/internal/utils/validation';
 import { NewAuthUsecase } from '$lib/internal/usecases';
 import { Dto } from '$lib/internal/model';
 import { fail } from '@sveltejs/kit';
-import type { CookieSerializeOptions } from 'cookie';
+import { cookiesConfig } from '$lib/internal/utils/cookies';
 
-const cookiesConfig: CookieSerializeOptions & {
-	path: string;
-	sameSite: 'strict' | 'lax' | 'none' | undefined;
-} = {
-	path: '/',
-	httpOnly: true,
-	sameSite: 'strict',
-	secure: process.env.NODE_ENV === 'production',
-	maxAge: 60 * 60 * 24 * 7 // 1 week
-};
-
-export const load: PageServerLoad = async () => {
-	return {
-		// status: 302,
-		// headers: {
-		// 	location: '/auth'
-		// }
-	};
+export const load: PageServerLoad = async ({ url, cookies }) => {
+	if (url.searchParams.get('action') === 'logout') {
+		cookies.delete('user', { path: '/', maxAge: 0 });
+		cookies.delete('token', { path: '/', maxAge: 0 });
+		return {
+			status: 302,
+			headers: {
+				'set-cookie': `session=; Max-Age=0; Path=/; HttpOnly` // clear the session cookie
+			}
+		};
+	}
 };
 
 export const actions: Actions = {
