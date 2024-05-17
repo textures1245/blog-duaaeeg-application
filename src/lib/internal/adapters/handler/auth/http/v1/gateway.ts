@@ -1,5 +1,6 @@
 import type {
 	AuthCredential,
+	AuthOption,
 	TAuthHandlerGateway,
 	UserClaims
 } from '$lib/internal/model/auth/domains/auth';
@@ -20,8 +21,16 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 		super(baseURL);
 	}
 
-	public async signUp(data: AuthCredential): Promise<AxiosResponse> {
+	public async signUp(data: AuthCredential, opt?: AuthOption): Promise<AxiosResponse> {
 		try {
+			if (opt) {
+				return this.client.post('/register', data, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						...opt
+					}
+				});
+			}
 			return this.client.post('/register', data, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
@@ -33,8 +42,17 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 		}
 	}
 
-	public async signIn(data: AuthCredential): Promise<AxiosResponse> {
+	public async signIn(data: AuthCredential, opt?: AuthOption): Promise<AxiosResponse> {
 		try {
+			if (opt) {
+				return this.client.post('/login', data, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						...opt
+					}
+				});
+			}
+
 			return this.client.post('/login', data, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
