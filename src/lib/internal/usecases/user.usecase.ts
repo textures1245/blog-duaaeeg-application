@@ -44,6 +44,7 @@ export default class UserUsecase implements TUserUsecase {
 		}
 
 		const response = await this.gateway.getUsers(token, fetchMode);
+
 		console.log(response.data);
 		return Dto.GetResponse(response);
 	}
