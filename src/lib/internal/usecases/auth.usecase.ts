@@ -26,18 +26,16 @@ export default class AuthUsecase implements TAuthUsecase {
 		}
 
 		const response = await this.gateway.signIn(data);
-		console.log(response.data);
 		return Dto.GetResponse<UserToken>(response);
 	}
 
 	public async getUserData(token: string): Promise<DtoResponded<User>> {
 		if (!token) {
-            console.log("token :", token);
+			console.log('token :', token);
 			throw new Error('Response data is empty');
 		}
 
 		const userClaim = await this.gateway.getUserClaims(token);
-		console.log(userClaim);
 		const response = await this.userGateway.getUser(Dto.GetResponse(userClaim), token);
 		return Dto.GetResponse(response);
 	}
