@@ -1,20 +1,16 @@
-<script>
-	import BreadcrumbPage from '$lib/components/ui/breadcrumb/breadcrumb-page.svelte';
-	import BreadcrumbSeparator from '$lib/components/ui/breadcrumb/breadcrumb-separator.svelte';
+<script lang="ts">
+	import type { User } from '$lib/internal/model/auth/domains/user';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
-	import { Separator } from '$lib/components/ui/separator';
 	import * as Sheet from '$lib/components/ui/sheet/index';
 
-	export let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
+	export let menu: string[];
 	export let avatarSrc =
 		'https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg';
 
-	let showStatusBar = true;
-	let showActivityBar = false;
-	let showPanel = false;
+	export let user: User | null | undefined;
 </script>
 
 <div class="grid bg h-20 items-center">
@@ -63,29 +59,57 @@
 				class="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
 			/>
 		</div>
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger asChild let:builder>
-				<Button
-					variant="outline"
-					size="icon"
-					class="overflow-hidden m-4 rounded-full"
-					builders={[builder]}
-				>
-					<img
-						width="32"
-						height="32"
-						src={avatarSrc}
-						alt="Avatar"
-						class="overflow-hidden rounded-full"
-					/>
-				</Button>
-			</DropdownMenu.Trigger>
-			<DropdownMenu.Content align="end">
-				<DropdownMenu.Label>Account</DropdownMenu.Label>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item href="/auth">Sign In</DropdownMenu.Item>
-			</DropdownMenu.Content>
-		</DropdownMenu.Root>
+		{#if !user}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger asChild let:builder>
+					<Button
+						variant="outline"
+						size="icon"
+						class="overflow-hidden m-4 rounded-full"
+						builders={[builder]}
+					>
+						<img
+							width="32"
+							height="32"
+							src={avatarSrc}
+							alt="Avatar"
+							class="overflow-hidden rounded-full"
+						/>
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content align="end">
+					<DropdownMenu.Label>Account</DropdownMenu.Label>
+					<DropdownMenu.Separator />
+					<DropdownMenu.Separator />
+					<DropdownMenu.Item href="/auth">Sign In</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		{:else}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger asChild let:builder>
+					<Button
+						variant="outline"
+						size="icon"
+						class="overflow-hidden m-4 rounded-full"
+						builders={[builder]}
+					>
+						<img
+							width="32"
+							height="32"
+							src={user.user_profile.profile_picture ?? avatarSrc}
+							alt="Avatar"
+							class="overflow-hidden rounded-full"
+						/>
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content align="end">
+					<DropdownMenu.Label>Account</DropdownMenu.Label>
+					<DropdownMenu.Separator />
+					<DropdownMenu.Item href={`/user-profile/${user.uuid}`}>Profile Setting</DropdownMenu.Item>
+					<DropdownMenu.Separator />
+					<DropdownMenu.Item href="/auth?action=logout">Sign Out</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		{/if}
 	</header>
 </div>
