@@ -16,11 +16,13 @@
 	});
 </script>
 
-<div class="grid gap-6 min-h-screen w-full grid-flow-row bg-background text-foreground">
+<div class="dark min-h-screen relative w-full bg-background text-foreground">
 	<slot name="sidebar"></slot>
-	<slot name="navbar">
-		<Navbar {menu} {user} />
-	</slot>
-	<slot />
+	<div class="min-h-screen grid">
+		<slot name="navbar">
+			<Navbar {menu} {user} />
+		</slot>
+		<slot />
+	</div>
 	<slot name="footer"></slot>
 </div>

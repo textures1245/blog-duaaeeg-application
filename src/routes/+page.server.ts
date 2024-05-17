@@ -6,6 +6,14 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ cookies }) => {
 	try {
 		const { user } = CookiesJsonParser(cookies, 'user');
+		if (!user.user_profile.created_at) {
+			return new Response(null, {
+				status: 302,
+				headers: {
+					location: `/user-profile/${user.uuid}`
+				}
+			});
+		}
 		return {
 			user
 		};
