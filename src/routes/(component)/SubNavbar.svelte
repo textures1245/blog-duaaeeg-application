@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Separator from './../../lib/components/ui/separator/separator.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
+	import Badge from '$lib/components/ui/badge/badge.svelte';
 
 	export let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
 </script>
@@ -14,8 +15,7 @@
 				{#each menu as m}
 					<Breadcrumb.Item class="flex gap-4">
 						<Breadcrumb.Link href={m}>{m}</Breadcrumb.Link>
-						<Separator orientation="vertical" />
-						<div class="font-lighter text-sm mr-4 text-slate-50">|</div>
+						<Breadcrumb.Separator />
 					</Breadcrumb.Item>
 				{/each}
 			</Breadcrumb.List>
