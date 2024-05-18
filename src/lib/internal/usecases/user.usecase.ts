@@ -1,4 +1,5 @@
 import type { ProfileForm } from '../../../routes/user-profile/[id]/ProfileForm.svelte';
+import type { HeaderConfig } from '../adapters/handler';
 import type APIUserGateway from '../adapters/handler/user/http/v1/gateway';
 import { Dto, type DtoResponded } from '../model';
 import type { UserClaims } from '../model/auth/domains/auth';
@@ -25,13 +26,14 @@ export default class UserUsecase implements TUserUsecase {
 	public async onUpdateUserProfile(
 		req: ProfileForm,
 		token: string,
-		userUuid: string
+		userUuid: string,
+		headerConn?: HeaderConfig
 	): Promise<DtoResponded<UserProfile>> {
 		if (!req || !token || !userUuid) {
 			throw new Error('Request data is empty');
 		}
 
-		const res = await this.gateway.updateUserProfile(req, token, userUuid);
+		const res = await this.gateway.updateUserProfile(req, token, userUuid, headerConn);
 		return Dto.GetResponse(res);
 	}
 
@@ -44,8 +46,15 @@ export default class UserUsecase implements TUserUsecase {
 		}
 
 		const response = await this.gateway.getUsers(token, fetchMode);
+		return Dto.GetResponse(response);
+	}
 
-		console.log(response.data);
+	public async onDeleteUser(userUuid: string, token: string, headerConn?: HeaderConfig): Promise<DtoResponded<void>> {
+		if (!token) {
+			throw new Error('Request data is empty');
+		}
+
+		const response = await this.gateway.deleteUser(userUuid,  token, headerConn);
 		return Dto.GetResponse(response);
 	}
 }
