@@ -15,6 +15,8 @@ function redirectToUserProfile(cookies: Cookies) {
 		const { user } = CookiesJsonParser(cookies, 'user');
 		if (!user.user_profile.created_at) {
 			throw redirect(302, `/user-profile/${user.uuid}`);
+		} else {
+			throw redirect(302, `/`);
 		}
 	}
 }
@@ -32,7 +34,6 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 	}
 
 	redirectToUserProfile(cookies);
-
 
 	return {
 		status: 200
@@ -100,8 +101,6 @@ export const actions: Actions = {
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
-
-            redirectToUserProfile(cookies);
 
 			return Dto.ReturnSuccess(`User has been login`);
 		} catch (error) {
