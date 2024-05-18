@@ -22,13 +22,12 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		let users = res.result as UserWithPwd[];
 		if (users.length > 0) {
 			users = users.map((user) => {
-				const keyBuffer = Buffer.alloc(32)
-                keyBuffer.write(AEW_KEY);
+				const keyBuffer = Buffer.alloc(32);
+				keyBuffer.write(AEW_KEY);
 				user.password = AEWDecryption(user.password, keyBuffer);
 				return user;
 			});
 		}
-		console.log(users);
 
 		return {
 			users
