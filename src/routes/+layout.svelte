@@ -3,6 +3,7 @@
 	import './../app.css';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
+	import { Toaster } from 'svelte-sonner';
 
 	export let data: LayoutData;
 	let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
@@ -26,3 +27,4 @@
 	</div>
 	<slot name="footer"></slot>
 </div>
+<Toaster theme="dark" />
