@@ -5,6 +5,14 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 
+// const headerConfigAllowed = {
+// 	role: 'ADMIN'
+// };
+
+export type HeaderConfig = {
+	"role"?: "ADMIN"
+};
+
 export class APIGateway {
 	public readonly client: AxiosInstance;
 	constructor(baseURL?: string) {
