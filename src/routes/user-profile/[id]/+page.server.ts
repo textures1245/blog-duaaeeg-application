@@ -53,9 +53,9 @@ export const actions: Actions = {
 				result: Dto.ReturnSuccess(`Profile has been updated.`)
 			};
 		} catch (error) {
-			const err = new Error((error as AxiosError).message);
-			const res = Dto.ReturnError(`Failed to update profile, please try again.`, err);
-			return fail(res.status_code, {
+			console.log((error as AxiosError).response);
+			// const res = Dto.ReturnError(`Failed to update profile, please try again.`, err);
+			return fail(400, {
 				form
 			});
 		}
