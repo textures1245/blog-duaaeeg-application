@@ -4,6 +4,7 @@
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import { Toaster } from 'svelte-sonner';
+	import { ModeWatcher } from 'mode-watcher';
 
 	export let data: LayoutData;
 	let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
@@ -17,7 +18,7 @@
 	});
 </script>
 
-<div class="dark min-h-screen relative w-full bg-background text-foreground">
+<div class=" min-h-screen relative w-full bg-background text-foreground">
 	<slot name="sidebar"></slot>
 	<div class="min-h-screen grid">
 		<slot name="navbar">
@@ -28,3 +29,4 @@
 	<slot name="footer"></slot>
 </div>
 <Toaster theme="dark" />
+<ModeWatcher />
