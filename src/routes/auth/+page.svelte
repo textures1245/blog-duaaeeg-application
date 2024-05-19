@@ -9,10 +9,21 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import type { ActionData, PageData } from './$types';
+	import { ToastInfo } from '$lib/internal/utils/toast';
+	import { enhance } from '$app/forms';
 
 	let mode: 'SIGN_IN' | 'SIGN_UP' = 'SIGN_IN';
 	// export let data: PageData;
 	export let form: ActionData;
+
+	$: {
+		if (form?.toast) {
+			ToastInfo.Run(form.toast);
+		}
+		// if (action?.headers) {
+		// 	if (action.headers.location) goto(action.headers.location);
+		// }
+	}
 </script>
 
 {#if form?.status_code === 500}
@@ -21,7 +32,7 @@
 
 {#if mode === 'SIGN_IN'}
 	<Card.Root class="w-full sm:w-[40rem]  bg-background text-foreground mx-auto grid  ">
-		<form method="POST" action="?/signIn">
+		<form method="POST" use:enhance action="?/signIn">
 			<Card.Header>
 				<Card.Title>Sign In</Card.Title>
 				<Card.Description>Enter your account below</Card.Description>

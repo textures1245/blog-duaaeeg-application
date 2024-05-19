@@ -9,6 +9,8 @@ import { NewAuthUsecase } from '$lib/internal/usecases';
 import { Dto } from '$lib/internal/model';
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import { cookiesConfig, CookiesJsonParser } from '$lib/internal/utils/cookies';
+import { ToastInfo } from '$lib/internal/utils/toast';
+import type { AxiosError } from 'axios';
 
 function redirectToUserProfile(cookies: Cookies) {
 	if (cookies.get('token')) {
@@ -42,13 +44,19 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 
 export const actions: Actions = {
 	signUp: async ({ request, cookies }) => {
+		console.log('createUser');
 		const { email, password } = Object.fromEntries(await request.formData()) as AuthCredential;
 
 		const dat = zValidate(AuthCredentialSchema, { email, password });
 		if (dat instanceof Error) {
 			const res = Dto.ReturnError(`Username or password is invalid`, dat);
 			console.error(res);
-			return fail(res.status_code, { ...res });
+			return {
+				result: res,
+				toast: new ToastInfo('Form Invalid.', {
+					description: 'Username or password is invalid'
+				}).Dto()
+			};
 		}
 
 		try {
@@ -59,7 +67,12 @@ export const actions: Actions = {
 			const user = await NewAuthUsecase.getUserData(token.result.access_token);
 			if (user.status_code !== 200) {
 				console.error(user);
-				return fail(user.status_code, { ...user });
+				return {
+					result: user,
+					toast: new ToastInfo('Form Invalid.', {
+						description: 'Username or password is invalid'
+					}).Dto()
+				};
 			}
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
@@ -69,7 +82,10 @@ export const actions: Actions = {
 				headers: {
 					'set-cookie': `session=; Max-Age=0; Path=/; HttpOnly` // clear the session cookie
 				},
-				...Dto.ReturnSuccess(`User has been registered`)
+				result: Dto.ReturnSuccess(`User has been registered`),
+				toast: new ToastInfo('Form Invalid.', {
+					description: 'Username or password is invalid'
+				}).Dto()
 			};
 		} catch (error) {
 			console.error(error);
@@ -84,7 +100,13 @@ export const actions: Actions = {
 		const dat = zValidate(AuthCredentialSchema, { email, password });
 		if (dat instanceof Error) {
 			const res = Dto.ReturnError(`Username or password is invalid`, dat);
-			return fail(res.status_code, { ...res });
+			console.error(res);
+			return {
+				result: res,
+				toast: new ToastInfo('Form Invalid.', {
+					description: 'Username or password is invalid'
+				}).Dto()
+			};
 		}
 
 		try {
@@ -96,17 +118,35 @@ export const actions: Actions = {
 			const user = await NewAuthUsecase.getUserData(token.result.access_token);
 			if (user.status_code !== 200) {
 				console.error(user);
-				return fail(user.status_code, { ...user });
+				return {
+					result: user,
+					toast: new ToastInfo('Internal Server Error.', {
+						description: 'Something went wrong, please try again.'
+					}).Dto()
+				};
 			}
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
 
-			return Dto.ReturnSuccess(`User has been login`);
+			return {
+				headers: {
+					'set-cookie': `session=; Max-Age=0; Path=/; HttpOnly` // clear the session cookie
+				},
+				result: Dto.ReturnSuccess(`User had been logined`),
+				toast: new ToastInfo('Action Successfully', {
+					description: new Date().toLocaleString('th-US')
+				}).Dto()
+			};
 		} catch (error) {
-			console.error(error);
-			const res = Dto.ReturnError(`Failed to Authentication, please try again.`, error as Error);
-			return fail(res.status_code, { ...res });
+            const res = Dto.ReturnError(`Failed to Authentication, please try again.`, error as AxiosError);
+            console.error(res);
+            return {
+                result: res,
+                toast: new ToastInfo('Internal Server Error', {
+                    description: 'Something went wrong, please try again.'
+                }).Dto()
+            };
 		}
 	}
 };
