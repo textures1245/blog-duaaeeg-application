@@ -4,6 +4,7 @@
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 
 	export let menu = ['Dashboard', 'For you', 'Explore', 'Trend'];
+	export let rootPath;
 </script>
 
 <div style="border-width: 0 0 1.5px 0" class="grid bg h-14 items-center">
@@ -14,7 +15,9 @@
 			<Breadcrumb.List>
 				{#each menu as m}
 					<Breadcrumb.Item class="flex gap-4">
-						<Breadcrumb.Link href={m}>{m}</Breadcrumb.Link>
+						<Breadcrumb.Link href={`${rootPath}/${m ? m.toLowerCase() : ""}`}
+							>{m}</Breadcrumb.Link
+						>
 						<Breadcrumb.Separator />
 					</Breadcrumb.Item>
 				{/each}
