@@ -12,7 +12,7 @@
 
 	$: {
 		if (form?.toast) {
-			form.toast;
+			ToastInfo.Run(form.toast);
 		}
 		if (form?.headers) {
 			goto(form.headers.location);

@@ -88,31 +88,11 @@
 			<Avatar.Image src={$formData.profile_picture} alt="profile-picture-avatar" />
 		</Avatar.Root>
 	</div>
-	<!-- <div>
-		<Form.Fieldset {form} name="urls">
-			<Form.Legend>URLs</Form.Legend>
-			{#each $formData.urls as _, i}
-				<Form.ElementField {form} name="urls[{i}]">
-					<Form.Description class={cn(i !== 0 && 'sr-only')}>
-						Add links to your website, blog, or social media profiles.
-					</Form.Description>
-					<Form.Control let:attrs>
-						<Input {...attrs} bind:value={$formData.urls[i]} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.ElementField>
-			{/each}
-		</Form.Fieldset>
-		<Button type="button" variant="outline" size="sm" class="mt-2" on:click={addUrl}>
-			Add URL
-		</Button>
-	</div> -->
-
 	<div class="flex gap-4">
 		<Form.Button>Update profile</Form.Button>
 		<Form.Button variant="destructive" formaction="?/deleteUser">Delete User</Form.Button>
 		<Separator orientation="vertical" />
-		<AlertDialog.Root>
+		<!-- <AlertDialog.Root>
 			<AlertDialog.Trigger asChild let:builder>
 				<Form.Button variant="destructive" builders={[builder]}>Delete User</Form.Button>
 			</AlertDialog.Trigger>
@@ -133,7 +113,7 @@
 					>
 				</AlertDialog.Footer>
 			</AlertDialog.Content>
-		</AlertDialog.Root>
+		</AlertDialog.Root> -->
 	</div>
 </form>
 

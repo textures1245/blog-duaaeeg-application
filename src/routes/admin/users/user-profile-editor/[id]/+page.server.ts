@@ -3,11 +3,9 @@ import type { Actions, PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { NewUserUsecase } from '$lib/internal/usecases';
 import { CookiesJsonParser } from '$lib/internal/utils/cookies';
-// import type { AxiosError } from 'axios';
+
 import { profileFormSchema } from '../../../../user-profile/[id]/ProfileForm.svelte';
 import type { HeaderConfig } from '$lib/internal/adapters/handler';
-import { toast } from 'svelte-sonner';
-// import { redirect } from '@sveltejs/kit';
 import { AxiosError } from 'axios';
 import { ToastInfo } from '$lib/internal/utils/toast';
 
@@ -31,10 +29,6 @@ export const actions: Actions = {
 
 		console.info('form :', form);
 		if (!form.valid) {
-			console.info('Invalidation Inputs:', form);
-			toast.error('Invalidation Inputs', {
-				description: form.message
-			});
 			return {
 				form: fail(400, {
 					form
