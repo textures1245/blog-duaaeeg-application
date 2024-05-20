@@ -1,16 +1,9 @@
-<script context="module" lang="ts">
-	export type SubNavbarMenu = {
-		path: string;
-		label: string;
-	};
-</script>
-
 <script lang="ts">
 	import Separator from './../../lib/components/ui/separator/separator.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 
-	export let menu: SubNavbarMenu[];
+	export let menu: string[];
 	export let rootPath;
 </script>
 
@@ -22,9 +15,7 @@
 			<Breadcrumb.List>
 				{#each menu as m}
 					<Breadcrumb.Item class="flex gap-4">
-						<Breadcrumb.Link href={`${rootPath}/${m ? m.path.toLowerCase() : ''}`}
-							>{m.label}</Breadcrumb.Link
-						>
+						<Breadcrumb.Link href={`${rootPath}/${m ? m.toLowerCase() : ''}`}>{m}</Breadcrumb.Link>
 						<Breadcrumb.Separator />
 					</Breadcrumb.Item>
 				{/each}
