@@ -38,7 +38,7 @@ export default class APIAuthGateway extends APIGateway implements TAuthHandlerGa
 			});
 		} catch (error: unknown) {
 			const axiosError = error as AxiosError;
-			throw new Error(`Failed to sign up: ${axiosError.message}`);
+            throw new Error(`Failed to sign up: ${axiosError.message}`);
 		}
 	}
 
