@@ -1,3 +1,12 @@
+<script context="module" lang="ts">
+	export type MenuAction = {
+		label: string;
+		hrefTarget?: string;
+		icon: typeof SvelteComponent;
+		component?: typeof SvelteComponent;
+	};
+</script>
+
 <script lang="ts">
 	import type { User } from '$lib/internal/model/auth/domains/user';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
@@ -7,8 +16,9 @@
 	import * as Sheet from '$lib/components/ui/sheet/index';
 	import { toggleMode } from 'mode-watcher';
 	import { Moon, Sun } from 'svelte-radix';
+	import type { SvelteComponent } from 'svelte';
 
-	export let menu: string[];
+	export let menu: MenuAction[];
 	export let avatarSrc =
 		'https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg';
 
@@ -34,12 +44,20 @@
 						<span class="sr-only">Acme Inc</span>
 					</a>
 					{#each menu as m}
-						<a
-							href="##"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-						>
-							{m}
-						</a>
+						{#if m.hrefTarget}
+							<a
+								href="##"
+								class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							>
+								<svelte:component this={m.icon} />
+								{m.label}
+							</a>
+						{/if}
+
+						{#if m.component}
+							<svelte:component this={m.icon} />
+							<svelte:component this={m.component} />
+						{/if}
 					{/each}
 				</nav>
 			</Sheet.Content>
@@ -47,10 +65,22 @@
 		<Breadcrumb.Root class="hidden md:flex">
 			<Breadcrumb.List>
 				{#each menu as m}
-					<Breadcrumb.Item>
-						<Breadcrumb.Link href="##">{m}</Breadcrumb.Link>
-						<Breadcrumb.BreadcrumbSeparator class="my-4 " />
-					</Breadcrumb.Item>
+					{#if m.hrefTarget}
+						<a
+							href="##"
+							class="flex items-center gap-4 text-muted-foreground hover:text-foreground"
+						>
+							<svelte:component this={m.icon} size="18" />
+							{m.label}
+						</a>
+					{/if}
+					{#if m.component}
+						<div class="flex items-center gap-0 text-muted-foreground hover:text-foreground">
+							<svelte:component this={m.icon} size="18" />
+							<svelte:component this={m.component} />
+						</div>
+					{/if}
+					<Breadcrumb.BreadcrumbSeparator class="my-4 " />
 				{/each}
 			</Breadcrumb.List>
 		</Breadcrumb.Root>
