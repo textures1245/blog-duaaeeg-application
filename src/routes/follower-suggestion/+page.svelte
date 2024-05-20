@@ -3,5 +3,5 @@
 </script>
 
 <main>
-	<FollowerSuggestion />
+	<!-- <FollowerSuggestion /> -->
 </main>

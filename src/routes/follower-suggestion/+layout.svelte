@@ -4,6 +4,6 @@
 </script>
 
 <div class="lg:container mx-auto">
-	<SubNavbar />
+	<!-- <SubNavbar /> -->
 	<slot><!-- optional fallback --></slot>
 </div>
