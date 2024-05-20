@@ -1,5 +1,5 @@
 import { NewAuthUsecase, NewUserUsecase } from '$lib/internal/usecases';
-import { cookiesConfig, CookiesJsonParser } from '$lib/internal/utils/cookies';
+import {  CookiesJsonParser } from '$lib/internal/utils/cookies';
 import { fail } from 'sveltekit-superforms';
 import type { Actions, PageServerLoad } from './$types';
 import { Dto } from '$lib/internal/model';
@@ -47,7 +47,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 };
 
 export const actions: Actions = {
-	createUser: async ({ request, cookies }) => {
+	createUser: async ({ request }) => {
 		console.log('createUser');
 		const { email, password } = Object.fromEntries(await request.formData()) as AuthCredential;
 
@@ -78,9 +78,6 @@ export const actions: Actions = {
 					}).Dto()
 				};
 			}
-
-			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
-			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
 
 			return {
 				headers: {

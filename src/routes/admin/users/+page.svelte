@@ -50,7 +50,7 @@
 				<Table.Head class="text-right">Action</Table.Head>
 			</Table.Row>
 		</Table.Header>
-		<Table.Body>
+		<Table.Body class="text-xs">
 			{#each $userStore as u, i (i)}
 				<Table.Row>
 					<Table.Cell class="font-medium">
@@ -78,12 +78,12 @@
 					<Table.Cell class="text-right"
 						><DropdownMenu.Root>
 							<DropdownMenu.Trigger asChild let:builder>
-								<Button variant="outline" builders={[builder]}>Open</Button>
+								<Button variant="outline" size="sm" builders={[builder]}>Open</Button>
 							</DropdownMenu.Trigger>
 							<DropdownMenu.Content class="w-56">
 								<DropdownMenu.Label>Acton</DropdownMenu.Label>
 								<DropdownMenu.Separator />
-								<DropdownMenu.Item href={`users/user-profile-editor/${u.uuid}`}
+								<DropdownMenu.Item    href={`users/user-profile-editor/${u.uuid}`}
 									>Edit
 									<DropdownMenu.Shortcut>
 										<Update size="18" />
