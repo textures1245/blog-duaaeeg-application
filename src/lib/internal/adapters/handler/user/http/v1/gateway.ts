@@ -1,18 +1,11 @@
 import type { TUserHandlerGateway, User, UserProfile } from '$lib/internal/model/auth/domains/user';
 import type { AxiosError, AxiosResponse } from 'axios';
-import { APIGateway, type HeaderConfig } from '../../..';
+import { APIGateway, headerWithToken, type HeaderConfig } from '../../..';
 import type { UserClaims } from '$lib/internal/model/auth/domains/auth';
 import type { ProfileForm } from '../../../../../../../routes/user-profile/[id]/ProfileForm.svelte';
 import type { DtoResponded } from '$lib/internal/model';
 
-const header = (token: string, opt?: object) => {
-	return {
-		headers: {
-			Authorization: `Bearer ${token}`,
-			...opt
-		}
-	};
-};
+
 export default class APIUserGateway extends APIGateway implements TUserHandlerGateway {
 	constructor(baseURL?: string) {
 		super(baseURL);
@@ -20,7 +13,7 @@ export default class APIUserGateway extends APIGateway implements TUserHandlerGa
 
 	public async getUser(req: DtoResponded<UserClaims>, token: string): Promise<AxiosResponse<User>> {
 		try {
-			return this.client.get(`/${req.result.user_uuid}`, header(token));
+			return this.client.get(`/${req.result.user_uuid}`, headerWithToken(token));
 		} catch (error: unknown) {
 			throw new Error(`Failed to get user data: ${(error as AxiosError).message}`);
 		}
@@ -36,7 +29,7 @@ export default class APIUserGateway extends APIGateway implements TUserHandlerGa
 			const res = this.client.post(
 				`/${userUuid}/profile`,
 				req,
-				header(token, {
+				headerWithToken(token, {
 					'Content-Type': 'multipart/form-data',
 					...headerConn
 				})
@@ -56,13 +49,13 @@ export default class APIUserGateway extends APIGateway implements TUserHandlerGa
 			if (fetchMode) {
 				return this.client.get(
 					'/',
-					header(token, {
+					headerWithToken(token, {
 						'fetch-mode': fetchMode,
 						...headerConn
 					})
 				);
 			}
-			return this.client.get('/', header(token));
+			return this.client.get('/', headerWithToken(token));
 		} catch (error: unknown) {
 			throw new Error(`Failed to get users data: ${(error as AxiosError).message}`);
 		}
@@ -70,7 +63,7 @@ export default class APIUserGateway extends APIGateway implements TUserHandlerGa
 
 	public async deleteUser(userUuid: string, token: string, headerConn?: HeaderConfig): Promise<AxiosResponse<void>> {
 		try {
-			return this.client.delete(`/${userUuid}?action=DELETE_USER`, header(token, headerConn));
+			return this.client.delete(`/${userUuid}?action=DELETE_USER`, headerWithToken(token, headerConn));
 		} catch (error: unknown) {
 			throw new Error(`Failed to delete user data: ${(error as AxiosError).message}`);
 		}

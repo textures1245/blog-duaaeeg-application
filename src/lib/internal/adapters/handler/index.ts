@@ -10,7 +10,17 @@ import axios from 'axios';
 // };
 
 export type HeaderConfig = {
-	"role"?: "ADMIN"
+	role?: 'ADMIN';
+	'fetch-mode'?: 'WITH_PASSWORD';
+} & Record<string, string>;
+
+export const headerWithToken = (token: string, opt?: HeaderConfig) => {
+	return {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			...opt
+		}
+	};
 };
 
 export class APIGateway {
