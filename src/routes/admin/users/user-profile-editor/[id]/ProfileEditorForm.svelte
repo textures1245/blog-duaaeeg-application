@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Separator from './../../../../../lib/components/ui/separator/separator.svelte';
+	import Separator from '../../../../../lib/components/ui/separator/separator.svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input/index';
 	import { Textarea } from '$lib/components/ui/textarea';
