@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types.js';
 	import { Separator } from '$lib/components/ui/separator';
-	import ProfileForm from './ProfileForm.svelte';
+	import ProfileEditorForm from './ProfileEditorForm.svelte';
 	import type { ActionData } from './$types.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { toast } from 'svelte-sonner';
@@ -40,5 +40,5 @@
 	>
 		Show Toast
 	</Button>
-	<ProfileForm data={data.form} />
+	<ProfileEditorForm data={data.form} />
 </div>
