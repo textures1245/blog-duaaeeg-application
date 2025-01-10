@@ -4,7 +4,7 @@ import type { UserToken } from '../model/auth/domains/auth';
 import type { User } from '../model/auth/domains/user';
 
 type TypeMap = {
-	token: UserToken;
+	user_token: UserToken;
 	user: User;
 	// Add more keys and types as needed
 };

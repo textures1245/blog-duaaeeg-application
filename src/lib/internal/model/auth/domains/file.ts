@@ -16,6 +16,6 @@ export interface IFileHandlerGateway {
 }
 
 export interface IFileUsecase {
-	onGetFiles(token: string, header?: HeaderConfig): Promise<TFile[]>;
-	onUploadFile(file: TFile, token: string, header?: HeaderConfig): Promise<TFile>;
+	onGetTFiles(token: string, header?: HeaderConfig): Promise<TFile[]>;
+	onUploadTFile(file: TFile, token: string, header?: HeaderConfig): Promise<TFile>;
 }

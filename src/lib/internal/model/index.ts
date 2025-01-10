@@ -1,6 +1,11 @@
 import { AxiosError, type AxiosResponse } from 'axios';
 
-export interface DtoResponded<T> {
+export type FetchPostOptReq = {
+	page: number;
+	limit: number;
+};
+
+export type DtoResponded<T> = {
 	status: string;
 	status_code: number;
 	message: string;
