@@ -17,6 +17,8 @@
 	import type { User } from '$lib/internal/model/auth/domains/user';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import type { AccordionItemProps } from './../components/list-data/AccordionItem.svelte';
+	import type { PostResDat } from '$lib/internal/model/auth/domains/post';
 
 	export let data: PageData;
 	const menu: SubNavbarMenu[] = [
@@ -26,8 +28,28 @@
 		{ path: 'trend', label: 'Following' }
 	];
 
-	if (data.users) {
-		users.set(data.users);
+	onMount(() => {
+		if (data.users) {
+			users.set(data.users);
+		}
+	});
+
+	function mapPostToAccordionItemProps(post: PostResDat): AccordionItemProps {
+		return {
+			actor: {
+				name: `${post.user?.user_profile.first_name || "John"} ${post.user?.user_profile.last_name || "Doe"}`,
+				avatarSrc: post.user?.user_profile.profile_picture || ""  // Add appropriate avatar source if available
+			},
+			content: {
+				title: post.title,
+				description: post.source,
+				readApproximately: Math.ceil(post.source.length / 200), // Example calculation
+				tags: post.tags.tags,
+				category: post.category.name,
+				imageSrc: post.img_banner_url,
+				createdAt: new Date(post.created_at)
+			}
+		};
 	}
 </script>
 
@@ -35,10 +57,13 @@
 	<div class="grid container lg:max-w-none lg:grid-cols-3 gap-0 xl:gap-12">
 		<div id="lisfot-content" class="col-span-2 space-y-4">
 			<SubNavbar {menu} rootPath="" />
-			{#each Array(10).fill(null) as item}
+			{#each data.posts.map(mapPostToAccordionItemProps) as item}
 				<Accordion.Root>
-					<AccordionItem />
+					<AccordionItem prop={item} />
 				</Accordion.Root>
+			{:else}
+				<h1 class="place-self-center">No post available</h1>
+			
 			{/each}
 		</div>
 

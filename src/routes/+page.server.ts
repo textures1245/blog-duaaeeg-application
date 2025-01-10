@@ -1,46 +1,51 @@
-import { Dto } from '$lib/internal/model';
 import { CookiesJsonParser } from '$lib/internal/utils/cookies';
-import { fail } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { NewUserUsecase } from '$lib/internal/usecases';
+import { NewUserUsecase, NewPostHandlerGateway } from '$lib/internal/usecases';
+
 import type { User } from '$lib/internal/model/auth/domains/user';
+import type { PostResDat } from '$lib/internal/model/auth/domains/post';
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	try {
-		const { user, token } = CookiesJsonParser(cookies, 'user', 'token');
+		const { user, user_token } = CookiesJsonParser(cookies, 'user', 'user_token');
 		if (!user.user_profile.created_at) {
-			return new Response(null, {
-				status: 302,
-				headers: {
-					location: `/user-profile/${user.uuid}`
-				}
-			});
+			throw redirect(307, `/user-profile/${user.uuid}`);
 		}
+
+		let users: User[] = [];
+		let posts: PostResDat[] = [];
 
 		// fetch users
-		const res = await NewUserUsecase.onGetUsers(token.access_token);
-
+		const res = await NewUserUsecase.onGetUsers(user_token.access_token);
 		if (res.status_code !== 200) {
 			console.error(res);
-			return fail(res.status_code, { message: res.message });
+			throw error(res.status_code, res.message);
 		}
+		users = res.result;
 
-		const users = res.result as User[];
-
+		const postRes = await NewPostHandlerGateway.onFetchPublisherPosts(
+			{
+				page: 0,
+				limit: 10
+			},
+			user_token.access_token
+		);
+		if (postRes.status_code !== 200) {
+			console.error(postRes);
+			throw error(postRes.status_code, postRes.message);
+		}
+		posts = postRes.result;
 		return {
 			user,
-			users
+			users,
+			posts
 		};
-	} catch (error) {
-		// check if user data has stored in cookies or it expired
-		if (error instanceof Error && error.message === 'Cookie not found') {
-			return {
-				user: null
-			};
-		} else {
-			const res = Dto.ReturnError(`Failed to get user data, please try again.`, error as Error);
-			console.log(res);
-			return fail(res.status_code, { ...res });
+	} catch (err) {
+		if (err instanceof Error && err.message === 'Cookie not found') {
+			throw redirect(307, `/auth`);
 		}
+		console.error(err);
+		throw error(500, 'Failed to get data, please try again.');
 	}
 };
