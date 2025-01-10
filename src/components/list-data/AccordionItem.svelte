@@ -13,7 +13,7 @@
 			readApproximately: number;
 			tags: string[];
 			category: string;
-			imageSrc: string;
+			imageSrc?: string;
 			createdAt: Date;
 			imageAlt?: string;
 		};
@@ -76,21 +76,23 @@
 					>{strLimiter(prop.content.description)}</Card.Description
 				>
 			</div>
-			<Card.Root class="w-40 place-self-center">
-				<ImageCard
-					width={16}
-					height={16}
-					imageSrc={prop.content.imageSrc}
-					imageSrcAlt={prop.content.imageAlt ?? 'content-image'}
-				/>
-			</Card.Root>
+			{#if prop.content.imageSrc}
+				<Card.Root class="w-40 place-self-center">
+					<ImageCard
+						width={16}
+						height={16}
+						imageSrc={prop.content.imageSrc}
+						imageSrcAlt={prop.content.imageAlt ?? 'content-image'}
+					/>
+				</Card.Root>
+			{/if}
 		</Card.Content>
 		<Card.Footer id="footer-section" class="flex text-lg  justify-between">
 			<div id="tag-n-category" class="flex gap-4">
 				<Badge variant="secondary">{capitalize(prop.content.category)}</Badge>
 				<div class="flex items-center gap-2">
 					{#each prop.content.tags as tag}
-						<div class="font-light ">{tag}</div>
+						<div class="font-light">{tag}</div>
 						<Separator orientation="vertical" />
 					{/each}
 				</div>
