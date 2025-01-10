@@ -2,7 +2,7 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ resolve, event }) => {
-	const token = event.cookies.get('token');
+	const token = event.cookies.get('user_token');
 	if (!token && event.url.pathname !== '/auth' && event.url.pathname !== '/') {
 		throw redirect(300, '/auth');
 	}

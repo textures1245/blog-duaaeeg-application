@@ -20,7 +20,7 @@ export const actions: Actions = {
 		const form = await superValidate(event, zod(profileFormSchema));
 		console.info('form :', form);
 		if (!form.valid) {
-			console.info('form :', form);
+			console.info('form is invalid:', form);
 			// const err = Dto.ReturnError(
 			// 	`Failed to update profile, please check your input.`,
 			// 	new Error(form.message)
@@ -31,10 +31,10 @@ export const actions: Actions = {
 		}
 
 		try {
-			const { token, user } = CookiesJsonParser(event.cookies, 'token', 'user');
+			const { user_token, user } = CookiesJsonParser(event.cookies, 'user_token', 'user');
 			const res = await NewUserUsecase.onUpdateUserProfile(
 				form.data,
-				token.access_token,
+				user_token.access_token,
 				user.uuid
 			);
 			if (res.status_code !== 200) {

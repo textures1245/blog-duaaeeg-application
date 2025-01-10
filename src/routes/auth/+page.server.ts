@@ -13,7 +13,7 @@ import { ToastInfo } from '$lib/internal/utils/toast';
 import type { AxiosError } from 'axios';
 
 function redirectToUserProfile(cookies: Cookies) {
-	if (cookies.get('token')) {
+	if (cookies.get('user_token')) {
 		const { user } = CookiesJsonParser(cookies, 'user');
 		if (!user.user_profile.created_at) {
 			throw redirect(302, `/user-profile/${user.uuid}`);
@@ -26,7 +26,7 @@ function redirectToUserProfile(cookies: Cookies) {
 export const load: PageServerLoad = async ({ url, cookies }) => {
 	if (url.searchParams.get('action') === 'logout') {
 		cookies.delete('user', { path: '/', maxAge: 0 });
-		cookies.delete('token', { path: '/', maxAge: 0 });
+		cookies.delete('user_token', { path: '/', maxAge: 0 });
 		return {
 			status: 302,
 			headers: {
@@ -76,7 +76,7 @@ export const actions: Actions = {
 			}
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
-			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
+			cookies.set('user_token', JSON.stringify(token.result), cookiesConfig);
 
 			return {
 				headers: {
@@ -127,7 +127,7 @@ export const actions: Actions = {
 			}
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
-			cookies.set('token', JSON.stringify(token.result), cookiesConfig);
+			cookies.set('user_token', JSON.stringify(token.result), cookiesConfig);
 
 			return {
 				headers: {

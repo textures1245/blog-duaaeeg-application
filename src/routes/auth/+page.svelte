@@ -40,11 +40,11 @@
 			<Card.Content class="flex flex-col gap-4">
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
-						<Label for="name">Name</Label>
+						<Label for="email">Email</Label>
 						<Input name="email" required type="email" id="email" placeholder="Email" />
 					</div>
 					<div class="flex flex-col space-y-1.5">
-						<Label for="id">Framework</Label>
+						<Label for="password">Password</Label>
 						<Input name="password" required type="password" id="password" placeholder="Password" />
 					</div>
 				</div>
@@ -75,11 +75,11 @@
 			<Card.Content class="flex flex-col gap-4">
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
-						<Label for="name">Name</Label>
+						<Label for="email">Email</Label>
 						<Input required type="email" name="email" id="email" placeholder="Email" />
 					</div>
 					<div class="flex flex-col space-y-1.5">
-						<Label for="id">Framework</Label>
+						<Label for="password">Password</Label>
 						<Input required type="password" name="password" id="password" placeholder="Password" />
 					</div>
 				</div>
