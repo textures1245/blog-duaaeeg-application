@@ -43,10 +43,10 @@ export const actions: Actions = {
 			const headerConfig: HeaderConfig = {
 				role: 'ADMIN'
 			};
-			const { token } = CookiesJsonParser(event.cookies, 'token');
+			const { user_token } = CookiesJsonParser(event.cookies, 'user_token');
 			const res = await NewUserUsecase.onUpdateUserProfile(
 				form.data,
-				token.access_token,
+				user_token.access_token,
 				event.params.id,
 				headerConfig
 			);
@@ -92,11 +92,11 @@ export const actions: Actions = {
 			const headerConfig: HeaderConfig = {
 				role: 'ADMIN'
 			};
-			const { token } = CookiesJsonParser(event.cookies, 'token');
+			const { user_token } = CookiesJsonParser(event.cookies, 'user_token');
 			console.log('event.params.id :', event.params.id);
 			const res = await NewUserUsecase.onDeleteUser(
 				event.params.id,
-				token.access_token,
+				user_token.access_token,
 				headerConfig
 			);
 			if (res.status_code !== 200) {

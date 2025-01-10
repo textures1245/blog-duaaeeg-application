@@ -18,8 +18,8 @@ import { ToastInfo } from '$lib/internal/utils/toast';
 export const load: PageServerLoad = async ({ cookies }) => {
 	// get users data
 	try {
-		const { token } = CookiesJsonParser(cookies, 'token');
-		const res = await NewUserUsecase.onGetUsers(token.access_token, 'WITH_PASSWORD');
+		const { user_token } = CookiesJsonParser(cookies, 'user_token');
+		const res = await NewUserUsecase.onGetUsers(user_token.access_token, 'WITH_PASSWORD');
 
 		if (res.status_code !== 200) {
 			console.error(res);
@@ -67,8 +67,8 @@ export const actions: Actions = {
 			const opt: AuthOption = {
 				'hash-method': 'AES'
 			};
-			const token = await NewAuthUsecase.onSignUp(dat, opt);
-			const user = await NewAuthUsecase.getUserData(token.result.access_token);
+			const user_token = await NewAuthUsecase.onSignUp(dat, opt);
+			const user = await NewAuthUsecase.getUserData(user_token.result.access_token);
 			if (user.status_code !== 200) {
 				console.error(user);
 				return {
