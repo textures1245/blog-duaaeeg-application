@@ -4,10 +4,11 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { NewUserUsecase } from '$lib/internal/usecases';
 import { CookiesJsonParser } from '$lib/internal/utils/cookies';
 
-import { profileFormSchema } from '../../../../user-profile/[id]/ProfileForm.svelte';
+
 import type { HeaderConfig } from '$lib/internal/adapters/handler';
 import { AxiosError } from 'axios';
 import { ToastInfo } from '$lib/internal/utils/toast';
+import { profileFormSchema } from '../../../../(component)/ProfileEditorForm.svelte';
 
 export const load: PageServerLoad = async () => {
 	return {

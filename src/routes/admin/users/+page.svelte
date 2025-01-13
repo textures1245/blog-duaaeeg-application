@@ -83,7 +83,7 @@
 							<DropdownMenu.Content class="w-56">
 								<DropdownMenu.Label>Acton</DropdownMenu.Label>
 								<DropdownMenu.Separator />
-								<DropdownMenu.Item    href={`users/user-profile-editor/${u.uuid}`}
+								<DropdownMenu.Item    href={`users/user-profile/${u.uuid}`}
 									>Edit
 									<DropdownMenu.Shortcut>
 										<Update size="18" />
