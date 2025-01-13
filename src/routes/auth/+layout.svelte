@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="grid h-fit place-items-center">
+<div class="grid place-items-center">
 	<!-- Your component layout goes here -->
 	<slot />
 </div>

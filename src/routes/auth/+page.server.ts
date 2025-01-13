@@ -12,6 +12,7 @@ import { cookiesConfig, CookiesJsonParser } from '$lib/internal/utils/cookies';
 import { ToastInfo } from '$lib/internal/utils/toast';
 import type { AxiosError } from 'axios';
 
+
 function redirectToUserProfile(cookies: Cookies) {
 	if (cookies.get('user_token')) {
 		const { user } = CookiesJsonParser(cookies, 'user');
@@ -78,6 +79,8 @@ export const actions: Actions = {
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('user_token', JSON.stringify(token.result), cookiesConfig);
 
+			
+
 			return {
 				headers: {
 					'set-cookie': `session=; Max-Age=0; Path=/; HttpOnly` // clear the session cookie
@@ -128,6 +131,8 @@ export const actions: Actions = {
 
 			cookies.set('user', JSON.stringify(user.result), cookiesConfig);
 			cookies.set('user_token', JSON.stringify(token.result), cookiesConfig);
+
+			
 
 			return {
 				headers: {

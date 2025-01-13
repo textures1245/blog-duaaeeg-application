@@ -31,7 +31,9 @@
 {/if}
 
 {#if mode === 'SIGN_IN'}
-	<Card.Root class="w-full sm:w-[40rem]  bg-background text-foreground mx-auto grid  ">
+	<Card.Root
+		class="w-full sm:w-[40rem]  bg-background text-foreground mx-auto grid  place-self-center"
+	>
 		<form method="POST" use:enhance action="?/signIn">
 			<Card.Header>
 				<Card.Title>Sign In</Card.Title>
@@ -66,7 +68,7 @@
 		</form>
 	</Card.Root>
 {:else}
-	<Card.Root class="w-auto  mx-auto grid  my-auto md:w-1/2">
+	<Card.Root class="w-auto place-self-center  mx-auto grid  my-auto md:w-1/2">
 		<form method="POST" action="?/signUp">
 			<Card.Header>
 				<Card.Title>Sign Up</Card.Title>
