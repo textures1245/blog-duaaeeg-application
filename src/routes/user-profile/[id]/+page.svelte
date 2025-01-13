@@ -1,8 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types.js';
 	import { Separator } from '$lib/components/ui/separator';
-	import ProfileForm from './ProfileForm.svelte';
+	import ProfileEditorForm from '../../(component)/ProfileEditorForm.svelte';
+	import { users } from '../../+page.svelte';
 	export let data: PageData;
+
 </script>
 
 <div class="space-y-6">
@@ -12,5 +14,5 @@
 	</div>
 	<Separator />
 
-	<ProfileForm data={data.form} />
+	<ProfileEditorForm user={data.user} data={data.form} />
 </div>

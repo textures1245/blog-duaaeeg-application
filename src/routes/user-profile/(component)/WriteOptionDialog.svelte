@@ -5,7 +5,6 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Input } from '$lib/components/ui/input';
 	import * as Card from '$lib/components/ui/card';
-	import ImageCard from '../../../components/list-data/ImageCard.svelte';
 	import { Link2, Pencil2 } from 'svelte-radix';
 </script>
 

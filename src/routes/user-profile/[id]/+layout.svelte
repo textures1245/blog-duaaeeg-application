@@ -1,27 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { Separator } from '$lib/components/ui/separator';
 	import SideNavbar from './../(component)/SideNavbar.svelte';
 
 	const sidebarNavItems = [
 		{
 			title: 'Profile',
-			href: '/examples/forms'
-		},
-		{
-			title: 'Account',
-			href: '/examples/forms/account'
-		},
-		{
-			title: 'Appearance',
-			href: '/examples/forms/appearance'
-		},
-		{
-			title: 'Notifications',
-			href: '/examples/forms/notifications'
-		},
-		{
-			title: 'Display',
-			href: '/examples/forms/display'
+			href: `/user-profile/${$page.params.id}`,
 		}
 	];
 </script>

@@ -1,11 +1,11 @@
 import { fail, superValidate } from 'sveltekit-superforms';
 import type { Actions, PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
-import { profileFormSchema, type ProfileForm } from './ProfileForm.svelte';
 import { Dto } from '$lib/internal/model';
 import { NewUserUsecase } from '$lib/internal/usecases';
 import { CookiesJsonParser } from '$lib/internal/utils/cookies';
 import type { AxiosError } from 'axios';
+import  {type ProfileForm, profileFormSchema} from '../../(component)/ProfileEditorForm.svelte';
 export const load: PageServerLoad = async ({ cookies }) => {
 	const { user } = CookiesJsonParser(cookies, 'user');
 	console.log(user);
