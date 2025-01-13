@@ -10,13 +10,12 @@
 <div class={className}>
 	<div class="overflow-hidden rounded-md">
 		<img
-			class="h-auto w-auto p-4 object-fit object-scale-down transition-all hover:scale-105 {aspectRatio === 'portrait'
+			class="h-auto w-auto  object-fit object-cover  transition-all hover:scale-105 {aspectRatio ===
+			'portrait'
 				? 'aspect-[3/4]'
 				: 'aspect-square'}"
 			src={imageSrc}
 			alt={imageSrcAlt}
-			{width}
-			{height}
 		/>
 	</div>
 

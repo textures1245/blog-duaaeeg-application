@@ -11,14 +11,18 @@
 		},
 		content: {
 			title: 'It adheres to the WAI-ARIA design pattern',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy',
+			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy',
 			readApproximately: 3,
 			tags: ['svelte', 'ui', 'design'],
 			category: 'Design',
 			imageSrc: 'https://miro.medium.com/v2/0*MtwTqI-HM95Lr2SR.jpg',
 			createdAt: new Date(),
-			imageAlt: 'image-alt'
+			imageAlt: 'image-alt',
+			uuid: '0',
+			interaction: {
+				like: [],
+				comment: [],
+			}
 		}
 	};
 </script>

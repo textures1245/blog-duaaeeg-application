@@ -17,6 +17,7 @@
 	import { toggleMode } from 'mode-watcher';
 	import { Moon, Sun } from 'svelte-radix';
 	import type { SvelteComponent } from 'svelte';
+	import { userActive } from '../routes/+layout.svelte';
 
 	export let menu: MenuAction[];
 	export let avatarSrc =
@@ -148,7 +149,7 @@
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item href={`/user-profile/${user.uuid}`}>Profile Setting</DropdownMenu.Item>
 					<DropdownMenu.Separator />
-					<DropdownMenu.Item href="/auth?action=logout">Sign Out</DropdownMenu.Item>
+					<DropdownMenu.Item href="/auth?action=logout" on:click={() => userActive.set(null)}>Sign Out</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
 		{/if}
