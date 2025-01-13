@@ -55,13 +55,21 @@ interface PostTagResDat {
 	tags: string[];
 }
 
-interface CommentModel {
-	// Define fields here
-}
+export type CommentModel = {
+	uuid: string;
+	user_uuid: string;
+	comment: string;
+	post_uuid: string;
+	created_at: string;
+	update_at: string;
+};
 
-interface LikeModel {
-	// Define fields here
-}
+export type LikeModel = {
+	uuid: string;
+	user_uuid: string;
+	post_uuid: string;
+	created_at: string;
+};
 
 export interface IPostHandlerGateway {
 	onCreateNewPost(

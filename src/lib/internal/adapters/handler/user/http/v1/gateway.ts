@@ -2,8 +2,8 @@ import type { TUserHandlerGateway, User, UserProfile } from '$lib/internal/model
 import type { AxiosError, AxiosResponse } from 'axios';
 import { APIGateway, headerWithToken, type HeaderConfig } from '../../..';
 import type { UserClaims } from '$lib/internal/model/auth/domains/auth';
-import type { ProfileForm } from '../../../../../../../routes/user-profile/[id]/ProfileForm.svelte';
 import type { DtoResponded } from '$lib/internal/model';
+import type { ProfileForm } from '../../../../../../../routes/(component)/ProfileEditorForm.svelte';
 
 
 export default class APIUserGateway extends APIGateway implements TUserHandlerGateway {

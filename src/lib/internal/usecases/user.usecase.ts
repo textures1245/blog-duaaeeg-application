@@ -1,4 +1,4 @@
-import type { ProfileForm } from '../../../routes/user-profile/[id]/ProfileForm.svelte';
+import type { ProfileForm } from '../../../routes/(component)/ProfileEditorForm.svelte';
 import type { HeaderConfig } from '../adapters/handler';
 import type APIUserGateway from '../adapters/handler/user/http/v1/gateway';
 import { Dto, type DtoResponded } from '../model';

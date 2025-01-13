@@ -1,8 +1,8 @@
 import type { AxiosResponse } from 'axios';
 import type { DtoResponded } from '../..';
 import type { UserClaims } from './auth';
-import type { ProfileForm } from '../../../../../routes/user-profile/[id]/ProfileForm.svelte';
 import type { HeaderConfig } from '$lib/internal/adapters/handler';
+import type { ProfileForm } from '../../../../../routes/(component)/ProfileEditorForm.svelte';
 
 export type UserProfile = {
 	first_name: string;
