@@ -12,11 +12,11 @@ const config = {
 	theme: {
 		container: {
 			padding: {
-				DEFAULT: '0.5rem',
-				sm: '1rem',
-				lg: '2rem',
-				xl: '3rem',
-				'2xl': '4rem'
+				DEFAULT: '1rem',
+				sm: '2rem',
+				lg: '3rem',
+				xl: '5rem',
+				'2xl': '5.5rem'
 			}
 		},
 		extend: {
@@ -74,7 +74,7 @@ const config = {
 			}
 		}
 	},
-	plugin: [daisyui, addDynamicIconSelectors()]
+	plugins: [daisyui, require('@tailwindcss/typography'), addDynamicIconSelectors()]
 };
 
 export default config;
